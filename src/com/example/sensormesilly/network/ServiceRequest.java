@@ -12,13 +12,11 @@ import java.net.Socket;
 import java.nio.charset.StandardCharsets;
 
 public class ServiceRequest {
-    private final Socket clientSocket;
     PrintWriter out;
     BufferedReader in;
     private ServiceRequest(Socket connection) throws IOException {
-        this.clientSocket= connection;
-        out = new PrintWriter(clientSocket.getOutputStream(), true);
-        in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream(), StandardCharsets.UTF_8));
+        out = new PrintWriter(connection.getOutputStream(), true);
+        in = new BufferedReader(new InputStreamReader(connection.getInputStream(), StandardCharsets.UTF_8));
     }
 
     public static ServiceRequest getServiceRequest(Socket socket) throws IOException {
@@ -28,6 +26,7 @@ public class ServiceRequest {
     public Measurement getMeasurement() {
         try {
             String data = getData();
+            System.out.println(data);
             return Util.jsonToMeasurement(data);
         } catch (IOException e){
             e.printStackTrace();
@@ -36,20 +35,19 @@ public class ServiceRequest {
     }
 
     public String getData() throws IOException {
-        out.print("get");
-        String msgRecv = in.readLine();
-        clientSocket.close();
-        System.out.println(msgRecv);
-        return msgRecv;
+        out.printf("get%s", "");
+        out.flush();
+        return in.readLine();
     }
 
     public void shutdownServer() {
-        out.print("shutdown%s");
+        out.printf("shutdown%s", "");
         out.close();
     }
 
     public void setSensorInterval(int seconds) {
         out.printf("interval%s", seconds);
+        out.flush();
         out.close();
     }
 }

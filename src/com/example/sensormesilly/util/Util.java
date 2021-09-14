@@ -14,9 +14,11 @@ public class Util {
         ObjectMapper objectMapper = new ObjectMapper();
         Map<String, Object> map = objectMapper.readValue(json, new TypeReference<>() {
         });
+
         String time = (String) map.get("time");
-        String temperature = (String) map.get("temperature");
-        String humidity = (String) map.get("humidity");
+        double temperature = Double.parseDouble(String.valueOf(map.get("temperature")));
+        double humidity = Double.parseDouble(String.valueOf(map.get("humidity")));
+
         return new Measurement(time, temperature, humidity);
     }
 }
