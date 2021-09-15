@@ -19,9 +19,9 @@ public class ServiceRequest {
         in = new BufferedReader(new InputStreamReader(connection.getInputStream(), StandardCharsets.UTF_8));
     }
 
-    public static ServiceRequest getServiceRequest(Socket socket) throws IOException {
+    public static ServiceRequest getServiceRequest() throws IOException {
 
-        return new ServiceRequest(socket);
+        return new ServiceRequest(ClientConnector.getConnection());
     }
     public Measurement getMeasurement() {
         try {
@@ -41,7 +41,7 @@ public class ServiceRequest {
     }
 
     public void shutdownServer() {
-        out.printf("shutdown%s", "");
+        out.printf("reboot%s", "");
         out.close();
     }
 

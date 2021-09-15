@@ -44,20 +44,18 @@ public class Controller implements MeasurementObserver {
     }
 
     private void createChart() {
-        //defining the axes
-        final CategoryAxis xAxis = new CategoryAxis(); // we are gonna plot against time
+        final CategoryAxis xAxis = new CategoryAxis();
         final NumberAxis yAxis = new NumberAxis();
         xAxis.setLabel("Time/s");
-        xAxis.setAnimated(false); // axis animations are removed
+        xAxis.setAnimated(false);
         yAxis.setLabel("Temperature");
-        yAxis.setAnimated(false); // axis animations are removed
+        yAxis.setAnimated(false);
 
-        //creating the line chart with two axis created above
         LineChart<String, Number> lineChart = new LineChart<>(xAxis, yAxis);
         anchorPane.getChildren().add(lineChart);
         lineChart.setTitle("Realtime JavaFX Charts");
-        lineChart.setAnimated(false); // disable animations
-        //defining a series to display data
+        lineChart.setAnimated(false);
+
         seriesTemperature = new XYChart.Series<>();
         seriesHumidity = new XYChart.Series<>();
         seriesTemperature.setName("Temperature");

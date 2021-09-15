@@ -2,7 +2,6 @@ package com.example.sensormesilly.model;
 
 
 import com.example.sensormesilly.controllers.MeasurementObserver;
-import com.example.sensormesilly.network.ClientConnector;
 import com.example.sensormesilly.network.ServiceRequest;
 
 import java.io.IOException;
@@ -51,17 +50,17 @@ public class ViewModelMeasurement implements  ObservableMeasurement {
         executorService.shutdown();
     }
     public void updateInterval(int seconds) throws IOException {
-        ServiceRequest.getServiceRequest(ClientConnector.getConnection())
+        ServiceRequest.getServiceRequest()
                 .setSensorInterval(seconds);
     }
 
     private Measurement getMeasurement() throws IOException {
 
-        return ServiceRequest.getServiceRequest(ClientConnector.getConnection())
+        return ServiceRequest.getServiceRequest()
                 .getMeasurement();
     }
     public void shutdownServer() throws IOException {
-        ServiceRequest.getServiceRequest(ClientConnector.getConnection())
+        ServiceRequest.getServiceRequest()
                 .shutdownServer();
     }
     @Override
